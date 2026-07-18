@@ -1,10 +1,37 @@
 # DR Detection Dashboard
 
-Full-stack wrapper around an existing diabetic retinopathy detection model
-(RBLNet: ResNet18 + multi-head attention, originally deployed as a Gradio
-Space at `Bhuvi046/dr-detection`). Upload a fundus image, get a DR stage
-prediction with a Grad-CAM heatmap and lesion bounding boxes, and browse
-prediction history.
+A full-stack web application for diabetic retinopathy screening. Upload a
+retinal fundus image and get a DR stage prediction (0–4), a Grad-CAM heatmap
+showing which regions influenced the model, detected lesion bounding boxes,
+and a searchable history of past predictions — all backed by a real
+diagnostic model, not a placeholder.
+
+<!-- Add a screenshot of the dashboard here, e.g. ![Dashboard screenshot](docs/screenshot.png) -->
+
+## What this demonstrates
+
+This isn't a CRUD to-do app — it's infrastructure around a real computer
+vision model:
+
+- **Frontend (React):** drag-and-drop upload, a result view rendering
+  model output (confidence bars, Grad-CAM overlay, lesion table), and a
+  persistent history sidebar.
+- **Backend (Node/Express):** REST API orchestrating the request lifecycle —
+  receives the upload, calls the inference service, persists structured
+  results, serves generated images.
+- **Database (PostgreSQL):** relational schema with a JSONB column for the
+  model's variable-length lesion output, indexed for the history query.
+- **ML service (FastAPI/PyTorch):** the model itself — a ResNet18 backbone
+  with a multi-head attention layer (RBLNet), Grad-CAM for explainability,
+  and input validation (rejects non-fundus images) plus confidence-based
+  abstention on uncertain predictions.
+- **Deployment:** four containerized services (Postgres, inference, API,
+  web) orchestrated with Docker Compose, with nginx reverse-proxying the
+  frontend to the API in production.
+
+The model (RBLNet: ResNet18 + multi-head attention) was originally trained
+and deployed as a standalone Gradio Space; this project wraps it in a
+production-shaped full-stack architecture.
 
 ## Architecture
 
@@ -23,18 +50,18 @@ React (web) → Express API (api) → FastAPI inference service (inference-servi
 
 ## Before you run this: one file you need to add
 
-`inference-service/rbl_model.pth` is **not included** — it's the trained
-model weight file (46.5 MB) from your Hugging Face Space. Download it and
-place it in `inference-service/` before building:
+`inference-service/rbl_model.pth` is **not included in this repo** (46.5 MB
+binary, excluded via `.gitignore`). Download it from the model's original
+Hugging Face Space and place it in `inference-service/` before building:
 
 ```
 https://huggingface.co/spaces/Bhuvi046/dr-detection/resolve/main/rbl_model.pth
 ```
 
-Everything else (`model.py`, the pipeline logic in `pipeline.py`) is already
-adapted from your original `app.py` / `model.py` — same architecture, same
-preprocessing, same Grad-CAM logic, just with the Gradio UI replaced by a
-`/predict` JSON endpoint.
+`model.py` and the pipeline logic in `pipeline.py` are adapted from that
+Space's original `app.py` / `model.py` — same architecture, same
+preprocessing, same Grad-CAM logic, with the Gradio UI replaced by a
+`/predict` JSON endpoint so it can be called from the Express API.
 
 ## Running locally with Docker Compose
 
@@ -98,3 +125,7 @@ project this size; if you want to talk about how you'd scale it in an
 interview, the natural next steps are: a queue (SQS/BullMQ) if inference
 latency becomes a problem, S3 instead of local disk, and auth if this ever
 stops being a single-user tool.
+
+## License
+
+MIT
