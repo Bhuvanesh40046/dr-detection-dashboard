@@ -1,0 +1,361 @@
+:root {
+  --bg: #f2f5f4;
+  --surface: #ffffff;
+  --ink: #16232b;
+  --ink-muted: #5b6b70;
+  --border: #dde3e1;
+  --accent: #0e7c66;
+  --accent-ink: #0a5747;
+  --accent-tint: #e3f2ee;
+  --warn: #b23a3a;
+  --warn-tint: #fbeaea;
+
+  --font-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100%;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: var(--ink);
+  color: #f2f5f4;
+}
+
+.app-header .brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.app-header .brand-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.app-header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.app-header .subtitle {
+  font-size: 12px;
+  color: #a9b6ba;
+  font-family: var(--font-mono);
+}
+
+.app-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+  padding: 20px 28px 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .app-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.panel + .panel {
+  margin-top: 20px;
+}
+
+.panel-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+
+.dropzone {
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.dropzone:hover,
+.dropzone.dragging {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--accent-ink);
+}
+
+.dropzone input {
+  display: none;
+}
+
+.preview-thumb {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:disabled {
+  background: #a9b6ba;
+  cursor: not-allowed;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.history-item:hover {
+  background: var(--bg);
+}
+
+.history-item.active {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+
+.history-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.history-meta {
+  min-width: 0;
+}
+
+.history-class {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-time {
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+}
+
+.severity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stage-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+.stage-banner .stage-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.stage-banner .stage-note {
+  font-size: 13px;
+  margin: 2px 0 0;
+  opacity: 0.85;
+}
+
+.stage-confidence {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.image-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-card img {
+  width: 100%;
+  display: block;
+}
+
+.image-card-label {
+  padding: 8px 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+}
+
+.confidence-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 52px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.confidence-track {
+  height: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+.confidence-value {
+  font-family: var(--font-mono);
+  text-align: right;
+  color: var(--ink-muted);
+}
+
+.warning-box {
+  background: var(--warn-tint);
+  color: var(--warn);
+  border: 1px solid #ecc9c9;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+table.lesion-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+table.lesion-table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+table.lesion-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+table.lesion-table td.mono {
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+}
+
+.empty-state {
+  color: var(--ink-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  padding-top: 14px;
+  line-height: 1.6;
+}

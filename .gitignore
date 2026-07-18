@@ -1,0 +1,15 @@
+inference-service/rbl_model.pth
+node_modules/
+.env
+api/.env
+api/uploads/
+uploads/
+__pycache__/
+*.pyc
+.venv/
+venv/
+web/dist/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
