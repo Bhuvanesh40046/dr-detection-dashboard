@@ -6,7 +6,7 @@ showing which regions influenced the model, detected lesion bounding boxes,
 and a searchable history of past predictions — all backed by a real
 diagnostic model, not a placeholder.
 
-<!-- Add a screenshot of the dashboard here, e.g. ![Dashboard screenshot](docs/screenshot.png) -->
+![Dashboard screenshot](docs/screenshot.png)
 
 ## What this demonstrates
 
